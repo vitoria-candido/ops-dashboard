@@ -1,69 +1,57 @@
-# 📊 OPS Dashboard | Full Stack Ticket Management System
+# 📊 OPS Dashboard
 
-Aplicação full stack para gerenciamento de tickets operacionais, com foco em organização, validação de dados e visualização de indicadores em tempo real.
+Aplicação full stack para cadastro e acompanhamento de tickets operacionais.
 
----
+## 🧩 O que o projeto faz
 
-## 🚀 Sobre o projeto
+O sistema permite:
 
-O **Ops Dashboard** é uma aplicação web para registro, acompanhamento e análise de tickets operacionais, permitindo maior controle de demandas e visualização de indicadores em tempo real.
+- cadastrar tickets com informações como data, categoria, status, tempo de resolução, canal, responsável e observações  
+- visualizar os tickets em uma tabela  
+- filtrar por status  
+- acompanhar indicadores simples (total, pendentes, em andamento e resolvidos)  
 
-O projeto foi desenvolvido com foco em boas práticas de desenvolvimento full stack, incluindo validações, organização de código e experiência do usuário.
-
----
-
-## 🧩 Funcionalidades
-
-* ✔️ Cadastro de tickets operacionais
-* ✔️ Visualização em tabela organizada
-* ✔️ Filtros por status (pendente, em andamento, resolvido)
-* ✔️ Indicadores (KPIs) em tempo real
-* ✔️ Validação completa de dados (frontend e backend)
-* ✔️ Formatação de tempo e datas
-* ✔️ Feedback visual (loading, sucesso e erro)
-
----
-
-## 🛠️ Tecnologias utilizadas
+## 🛠️ Tecnologias
 
 ### Frontend
-
-* React (componentização e gerenciamento de estado)
-* Vite (build e ambiente de desenvolvimento rápido)
-* JavaScript (ES6+)
-* CSS moderno e responsivo
+- React
+- Vite
+- CSS
 
 ### Backend
+- Node.js
+- Express
 
-* Node.js
-* Express (API REST)
-* SQLite (persistência de dados)
+### Banco de dados
+- SQLite
 
----
+## ✅ Validações
 
-## 🧪 Modo de demonstração
+Os dados são validados tanto no frontend quanto no backend.
 
-Este projeto foi configurado para uso em ambiente de demonstração:
+Algumas regras implementadas:
 
-* Os dados são armazenados temporariamente durante a execução
-* Ao reiniciar o servidor, todos os tickets são automaticamente removidos
+- todos os campos são obrigatórios  
+- a data precisa ser válida  
+- o tempo de resolução aceita formatos como:
+  - `30min`
+  - `1h`
+  - `1:30` → convertido para `1h30min`
+- responsável: até 60 caracteres  
+- observações: até 200 caracteres  
 
-Isso garante uma experiência limpa para cada nova execução do sistema.
-
----
-
-## ⚙️ Como rodar o projeto
+## ▶️ Como rodar o projeto
 
 ### 1. Clone o repositório
 
 ```bash
-git clone https://github.com/vitoria-candido/ops-dashboard.git
+git clone <seu-repo>
 cd ops-dashboard
 ```
 
 ---
 
-### 2. Backend
+### 🔧 Backend
 
 ```bash
 cd backend
@@ -71,12 +59,17 @@ npm install
 npm run dev
 ```
 
-Servidor rodando em:
+O backend roda em:
+
+```
 http://localhost:3000
+```
 
 ---
 
-### 3. Frontend
+### 💻 Frontend
+
+Em outro terminal:
 
 ```bash
 cd frontend
@@ -85,67 +78,29 @@ npm install
 npm run dev
 ```
 
-O arquivo `.env` define a URL da API utilizada pelo frontend.
-Por padrão, o projeto utiliza:
+No `.env`, use:
 
 ```
 VITE_API_URL=http://localhost:3000
 ```
 
-Aplicação disponível em:
+O frontend roda em:
+
+```
 http://localhost:5173
+```
 
 ---
 
-## 📁 Estrutura do projeto
+## 🗂️ Estrutura do projeto
 
 ```
 ops-dashboard/
 ├── backend/
-│   ├── src/
-│   │   ├── controllers/
-│   │   ├── database/
-│   │   ├── routes/
-│   │   ├── app.js
-│   │   └── server.js
-│
 ├── frontend/
-│   ├── src/
-│   │   ├── App.jsx
-│   │   └── App.css
-│   ├── vite.config.js
-│   └── .env.example
+├── dashboard.png
+└── README.md
 ```
-
----
-
-## ✨ Melhorias implementadas
-
-* 🔹 Validação robusta de dados (frontend e backend)
-* 🔹 Tratamento de erros amigável
-* 🔹 Organização de código em camadas
-* 🔹 Uso de variáveis de ambiente
-* 🔹 Reset automático de dados em ambiente de desenvolvimento
-* 🔹 Interface limpa e responsiva
-
----
-
-## 🎯 Objetivo
-
-Este projeto foi desenvolvido com o objetivo de consolidar conhecimentos em desenvolvimento full stack, incluindo:
-
-* Comunicação entre frontend e backend
-* Manipulação de dados
-* Estruturação de aplicações web
-* Boas práticas de desenvolvimento
-
----
-
-## 👩‍💻 Autora
-
-**Vitória Candido**
-
-Estudante de Sistemas de Informação – FIAP
 
 ---
 
@@ -155,6 +110,23 @@ Estudante de Sistemas de Informação – FIAP
 
 ---
 
-## 📌 Observação
+## ⚠️ Observação
 
-Desenvolvido para fins educacionais e demonstração de habilidades técnicas.
+Em ambiente de desenvolvimento, os tickets são apagados ao reiniciar o servidor.  
+Isso foi mantido para facilitar testes durante o desenvolvimento.
+
+---
+
+## 👩‍💻 Autora
+
+Vitória Candido
+
+Estudante de Sistemas de Informação 
+
+---
+
+## 💡 Sobre o projeto
+
+Este projeto foi desenvolvido como prática de uma aplicação full stack, cobrindo desde a criação de APIs até a interface com o usuário.
+
+A ideia foi focar em algo simples, mas funcional, com validações e organização de código.
