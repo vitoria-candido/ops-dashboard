@@ -45,7 +45,7 @@ Algumas regras implementadas:
 ### 1. Clone o repositório
 
 ```bash
-git clone <seu-repo>
+git clone https://github.com/vitoria-candido/ops-dashboard.git
 cd ops-dashboard
 ```
 
