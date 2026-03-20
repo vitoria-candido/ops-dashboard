@@ -1,6 +1,6 @@
-# 📊 Ops Dashboard
+# 📊 OPS Dashboard
 
-Ops Dashboard é uma aplicação full stack para registro e acompanhamento de tickets operacionais.
+OPS Dashboard é uma aplicação full stack para registro e acompanhamento de tickets operacionais.
 
 O projeto permite cadastrar, visualizar e analisar tickets com base em diferentes critérios, como status, categoria e tempo de resolução, simulando um cenário real de operação.
 
