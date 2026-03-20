@@ -6,23 +6,26 @@ Aplicação full stack para cadastro e acompanhamento de tickets operacionais.
 
 O sistema permite:
 
-- cadastrar tickets com informações como data, categoria, status, tempo de resolução, canal, responsável e observações  
-- visualizar os tickets em uma tabela  
-- filtrar por status  
-- acompanhar indicadores simples (total, pendentes, em andamento e resolvidos)  
+- cadastrar tickets com informações como data, categoria, status, tempo de resolução, canal, responsável e observações
+- visualizar os tickets em uma tabela
+- filtrar por status
+- acompanhar indicadores simples (total, pendentes, em andamento e resolvidos)
 
 ## 🛠️ Tecnologias
 
 ### Frontend
+
 - React
 - Vite
 - CSS
 
 ### Backend
+
 - Node.js
 - Express
 
 ### Banco de dados
+
 - SQLite
 
 ## ✅ Validações
@@ -31,14 +34,8 @@ Os dados são validados tanto no frontend quanto no backend.
 
 Algumas regras implementadas:
 
-- todos os campos são obrigatórios  
-- a data precisa ser válida  
-- o tempo de resolução aceita formatos como:
-  - `30min`
-  - `1h`
-  - `1:30` → convertido para `1h30min`
-- responsável: até 60 caracteres  
-- observações: até 200 caracteres  
+- Entrada flexível para tempo de resolução no frontend, com suporte a formatos como `30min`, `1h` e `1:30`
+- Conversão automática do tempo para um valor numérico em horas antes do envio para a API
 
 ## ▶️ Como rodar o projeto
 
@@ -121,7 +118,7 @@ Isso foi mantido para facilitar testes durante o desenvolvimento.
 
 Vitória Candido
 
-Estudante de Sistemas de Informação 
+Estudante de Sistemas de Informação
 
 ---
 
