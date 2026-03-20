@@ -1,13 +1,13 @@
-const path = require('path');
-const sqlite3 = require('sqlite3').verbose();
+const path = require("path");
+const sqlite3 = require("sqlite3").verbose();
 
-const databasePath = path.resolve(__dirname, '../../database.sqlite');
+const databasePath = path.resolve(__dirname, "../../database.sqlite");
 
 const db = new sqlite3.Database(databasePath, (err) => {
   if (err) {
-    console.error('Erro ao conectar no banco', err);
+    console.error("Erro ao conectar no banco", err);
   } else {
-    console.log('Banco conectado');
+    console.log("Banco conectado");
   }
 });
 
@@ -25,12 +25,14 @@ db.serialize(() => {
     )
   `);
 
-  if (process.env.NODE_ENV !== 'production') {
-    db.run('DELETE FROM tickets', (err) => {
+  if (process.env.NODE_ENV !== "production") {
+    db.run("DELETE FROM tickets", (err) => {
       if (err) {
-        console.error('Erro ao limpar tickets em desenvolvimento', err);
+        console.error("Erro ao limpar tickets em desenvolvimento", err);
       } else {
-        console.log('Tickets apagados ao iniciar o servidor (modo desenvolvimento)');
+        console.log(
+          "Tickets apagados ao iniciar o servidor (modo desenvolvimento)",
+        );
       }
     });
   }

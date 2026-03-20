@@ -1,23 +1,23 @@
-import { useEffect, useMemo, useState } from 'react';
-import './App.css';
+import { useEffect, useMemo, useState } from "react";
+import "./App.css";
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 const initialFormData = {
-  date: '',
-  category: '',
-  status: '',
-  resolution_time: '',
-  channel: '',
-  owner: '',
-  notes: ''
+  date: "",
+  category: "",
+  status: "",
+  resolution_time: "",
+  channel: "",
+  owner: "",
+  notes: "",
 };
 
 function App() {
   const [tickets, setTickets] = useState([]);
-  const [filter, setFilter] = useState('todos');
-  const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [filter, setFilter] = useState("todos");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [isLoadingTickets, setIsLoadingTickets] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState(initialFormData);
@@ -25,18 +25,18 @@ function App() {
   const fetchTickets = async () => {
     try {
       setIsLoadingTickets(true);
-      setErrorMessage('');
+      setErrorMessage("");
 
       const response = await fetch(`${API_URL}/tickets`);
 
       if (!response.ok) {
-        throw new Error('Não foi possível buscar os tickets.');
+        throw new Error("Não foi possível buscar os tickets.");
       }
 
       const data = await response.json();
       setTickets(Array.isArray(data) ? data : []);
     } catch (error) {
-      setErrorMessage(error.message || 'Erro ao buscar tickets.');
+      setErrorMessage(error.message || "Erro ao buscar tickets.");
     } finally {
       setIsLoadingTickets(false);
     }
@@ -50,7 +50,7 @@ function App() {
     setSuccessMessage(message);
 
     setTimeout(() => {
-      setSuccessMessage('');
+      setSuccessMessage("");
     }, 3000);
   };
 
@@ -59,14 +59,14 @@ function App() {
 
     setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const isValidDate = (dateString) => {
     if (!dateString || !/^\d{4}-\d{2}-\d{2}$/.test(dateString)) return false;
 
-    const [year, month, day] = dateString.split('-').map(Number);
+    const [year, month, day] = dateString.split("-").map(Number);
     const date = new Date(`${dateString}T00:00:00`);
 
     return (
@@ -78,14 +78,14 @@ function App() {
   };
 
   const parseResolutionTime = (value) => {
-    if (!value || typeof value !== 'string') return null;
+    if (!value || typeof value !== "string") return null;
 
     const normalized = value.trim().toLowerCase();
 
     if (!normalized) return null;
 
     if (/^\d+:\d{2}$/.test(normalized)) {
-      const [hours, minutes] = normalized.split(':').map(Number);
+      const [hours, minutes] = normalized.split(":").map(Number);
 
       if (minutes >= 60) return null;
 
@@ -93,12 +93,12 @@ function App() {
     }
 
     if (/^\d+h$/.test(normalized)) {
-      const hours = Number(normalized.replace('h', ''));
+      const hours = Number(normalized.replace("h", ""));
       return hours > 0 ? hours : null;
     }
 
     if (/^\d+min$/.test(normalized)) {
-      const minutes = Number(normalized.replace('min', ''));
+      const minutes = Number(normalized.replace("min", ""));
       return minutes > 0 ? minutes / 60 : null;
     }
 
@@ -119,26 +119,26 @@ function App() {
       !notes ||
       !formData.resolution_time.trim()
     ) {
-      return 'Todos os campos são obrigatórios.';
+      return "Todos os campos são obrigatórios.";
     }
 
     if (!isValidDate(formData.date)) {
-      return 'Informe uma data válida.';
+      return "Informe uma data válida.";
     }
 
     if (parsedResolutionTime === null || parsedResolutionTime <= 0) {
-      return 'Informe o tempo no formato 30min, 1h ou 1:30.';
+      return "Informe o tempo no formato 30min, 1h ou 1:30.";
     }
 
     if (owner.length > 60) {
-      return 'O responsável pode ter no máximo 60 caracteres.';
+      return "O responsável pode ter no máximo 60 caracteres.";
     }
 
     if (notes.length > 200) {
-      return 'As observações podem ter no máximo 200 caracteres.';
+      return "As observações podem ter no máximo 200 caracteres.";
     }
 
-    return '';
+    return "";
   };
 
   const handleSubmit = async (event) => {
@@ -148,92 +148,90 @@ function App() {
 
     if (validationError) {
       setErrorMessage(validationError);
-      setSuccessMessage('');
+      setSuccessMessage("");
       return;
     }
 
     try {
       setIsSubmitting(true);
-      setErrorMessage('');
-      setSuccessMessage('');
+      setErrorMessage("");
+      setSuccessMessage("");
 
       const payload = {
         ...formData,
         owner: formData.owner.trim(),
         notes: formData.notes.trim(),
-        resolution_time: parseResolutionTime(formData.resolution_time)
+        resolution_time: parseResolutionTime(formData.resolution_time),
       };
 
       const response = await fetch(`${API_URL}/tickets`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Erro ao criar ticket.');
+        throw new Error(data.error || "Erro ao criar ticket.");
       }
 
       setFormData(initialFormData);
-      showTemporarySuccess('Ticket adicionado com sucesso.');
+      showTemporarySuccess("Ticket adicionado com sucesso.");
       fetchTickets();
     } catch (error) {
-      setErrorMessage(error.message || 'Erro ao criar ticket.');
+      setErrorMessage(error.message || "Erro ao criar ticket.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
   const formatDate = (dateString) => {
-    if (!dateString) return '';
+    if (!dateString) return "";
 
     const date = new Date(`${dateString}T00:00:00`);
 
-    if (Number.isNaN(date.getTime())) return '';
+    if (Number.isNaN(date.getTime())) return "";
 
-    return date.toLocaleDateString('pt-BR');
+    return date.toLocaleDateString("pt-BR");
   };
 
   const formatResolutionTime = (time) => {
-  const numericTime = Number(time);
+    const numericTime = Number(time);
 
-  if (Number.isNaN(numericTime) || numericTime <= 0) return '';
+    if (Number.isNaN(numericTime) || numericTime <= 0) return "";
 
-  const totalMinutes = Math.round(numericTime * 60);
-  const hours = Math.floor(totalMinutes / 60);
-  const minutes = totalMinutes % 60;
+    const totalMinutes = Math.round(numericTime * 60);
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
 
-  if (hours === 0) return `${minutes}min`;
-  if (minutes === 0) return `${hours}h`;
+    if (hours === 0) return `${minutes}min`;
+    if (minutes === 0) return `${hours}h`;
 
-  return `${hours}h${minutes}min`;
-};
+    return `${hours}h${minutes}min`;
+  };
 
   const totalTickets = tickets.length;
 
   const pendingTickets = tickets.filter(
-    (ticket) => ticket.status?.toLowerCase() === 'pendente'
+    (ticket) => ticket.status?.toLowerCase() === "pendente",
   ).length;
 
   const inProgressTickets = tickets.filter(
-    (ticket) => ticket.status?.toLowerCase() === 'em andamento'
+    (ticket) => ticket.status?.toLowerCase() === "em andamento",
   ).length;
 
   const resolvedTickets = tickets.filter(
-    (ticket) => ticket.status?.toLowerCase() === 'resolvido'
+    (ticket) => ticket.status?.toLowerCase() === "resolvido",
   ).length;
 
   const filteredTickets = useMemo(() => {
     const list =
-      filter === 'todos'
+      filter === "todos"
         ? tickets
-        : tickets.filter(
-            (ticket) => ticket.status?.toLowerCase() === filter
-          );
+        : tickets.filter((ticket) => ticket.status?.toLowerCase() === filter);
 
     return [...list].sort((a, b) => {
       const dateDiff =
@@ -248,9 +246,9 @@ function App() {
   const getStatusClass = (status) => {
     const normalizedStatus = status?.toLowerCase();
 
-    if (normalizedStatus === 'pendente') return 'status-badge pending';
-    if (normalizedStatus === 'em andamento') return 'status-badge in-progress';
-    return 'status-badge resolved';
+    if (normalizedStatus === "pendente") return "status-badge pending";
+    if (normalizedStatus === "em andamento") return "status-badge in-progress";
+    return "status-badge resolved";
   };
 
   return (
@@ -293,9 +291,7 @@ function App() {
           <div className="success-message">{successMessage}</div>
         )}
 
-        {errorMessage && (
-          <div className="error-message">{errorMessage}</div>
-        )}
+        {errorMessage && <div className="error-message">{errorMessage}</div>}
 
         <form onSubmit={handleSubmit} className="ticket-form">
           <input
@@ -317,11 +313,7 @@ function App() {
             <option value="Atendimento">Atendimento</option>
           </select>
 
-          <select
-            name="status"
-            value={formData.status}
-            onChange={handleChange}
-          >
+          <select name="status" value={formData.status} onChange={handleChange}>
             <option value="">Selecione o status</option>
             <option value="Pendente">Pendente</option>
             <option value="Em Andamento">Em Andamento</option>
@@ -367,7 +359,7 @@ function App() {
           />
 
           <button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? 'Salvando...' : 'Adicionar Ticket'}
+            {isSubmitting ? "Salvando..." : "Adicionar Ticket"}
           </button>
         </form>
       </section>
@@ -379,32 +371,32 @@ function App() {
           <div className="filter-buttons">
             <button
               type="button"
-              className={filter === 'todos' ? 'active-filter' : ''}
-              onClick={() => setFilter('todos')}
+              className={filter === "todos" ? "active-filter" : ""}
+              onClick={() => setFilter("todos")}
             >
               Todos
             </button>
 
             <button
               type="button"
-              className={filter === 'pendente' ? 'active-filter' : ''}
-              onClick={() => setFilter('pendente')}
+              className={filter === "pendente" ? "active-filter" : ""}
+              onClick={() => setFilter("pendente")}
             >
               Pendentes
             </button>
 
             <button
               type="button"
-              className={filter === 'em andamento' ? 'active-filter' : ''}
-              onClick={() => setFilter('em andamento')}
+              className={filter === "em andamento" ? "active-filter" : ""}
+              onClick={() => setFilter("em andamento")}
             >
               Em Andamento
             </button>
 
             <button
               type="button"
-              className={filter === 'resolvido' ? 'active-filter' : ''}
-              onClick={() => setFilter('resolvido')}
+              className={filter === "resolvido" ? "active-filter" : ""}
+              onClick={() => setFilter("resolvido")}
             >
               Resolvidos
             </button>

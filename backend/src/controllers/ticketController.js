@@ -1,28 +1,20 @@
-const db = require('../database/db');
+const db = require("../database/db");
 
 const validCategories = [
-  'Logística',
-  'Financeiro',
-  'Tecnologia',
-  'Atendimento'
+  "Logística",
+  "Financeiro",
+  "Tecnologia",
+  "Atendimento",
 ];
 
-const validStatus = [
-  'Pendente',
-  'Em Andamento',
-  'Resolvido'
-];
+const validStatus = ["Pendente", "Em Andamento", "Resolvido"];
 
-const validChannels = [
-  'Chat',
-  'E-mail',
-  'Telefone'
-];
+const validChannels = ["Chat", "E-mail", "Telefone"];
 
 const isValidDate = (dateString) => {
   if (!dateString || !/^\d{4}-\d{2}-\d{2}$/.test(dateString)) return false;
 
-  const [year, month, day] = dateString.split('-').map(Number);
+  const [year, month, day] = dateString.split("-").map(Number);
   const date = new Date(`${dateString}T00:00:00`);
 
   return (
@@ -34,32 +26,21 @@ const isValidDate = (dateString) => {
 };
 
 exports.getTickets = (req, res) => {
-  db.all(
-    'SELECT * FROM tickets ORDER BY date ASC, id ASC',
-    [],
-    (err, rows) => {
-      if (err) {
-        return res.status(500).json({ error: 'Erro ao buscar tickets.' });
-      }
-
-      res.json(rows);
+  db.all("SELECT * FROM tickets ORDER BY date ASC, id ASC", [], (err, rows) => {
+    if (err) {
+      return res.status(500).json({ error: "Erro ao buscar tickets." });
     }
-  );
+
+    res.json(rows);
+  });
 };
 
 exports.createTicket = (req, res) => {
-  const {
-    date,
-    category,
-    status,
-    resolution_time,
-    channel,
-    owner,
-    notes
-  } = req.body;
+  const { date, category, status, resolution_time, channel, owner, notes } =
+    req.body;
 
-  const trimmedOwner = typeof owner === 'string' ? owner.trim() : '';
-  const trimmedNotes = typeof notes === 'string' ? notes.trim() : '';
+  const trimmedOwner = typeof owner === "string" ? owner.trim() : "";
+  const trimmedNotes = typeof notes === "string" ? notes.trim() : "";
   const numericResolutionTime = Number(resolution_time);
 
   if (
@@ -71,52 +52,52 @@ exports.createTicket = (req, res) => {
     !trimmedNotes ||
     resolution_time === undefined ||
     resolution_time === null ||
-    resolution_time === ''
+    resolution_time === ""
   ) {
     return res.status(400).json({
-      error: 'Todos os campos são obrigatórios.'
+      error: "Todos os campos são obrigatórios.",
     });
   }
 
   if (!isValidDate(date)) {
     return res.status(400).json({
-      error: 'Data inválida.'
+      error: "Data inválida.",
     });
   }
 
   if (!validCategories.includes(category)) {
     return res.status(400).json({
-      error: 'Categoria inválida.'
+      error: "Categoria inválida.",
     });
   }
 
   if (!validStatus.includes(status)) {
     return res.status(400).json({
-      error: 'Status inválido.'
+      error: "Status inválido.",
     });
   }
 
   if (!validChannels.includes(channel)) {
     return res.status(400).json({
-      error: 'Canal inválido.'
+      error: "Canal inválido.",
     });
   }
 
   if (Number.isNaN(numericResolutionTime) || numericResolutionTime <= 0) {
     return res.status(400).json({
-      error: 'O tempo deve ser um número maior que zero.'
+      error: "O tempo deve ser um número maior que zero.",
     });
   }
 
   if (trimmedOwner.length > 60) {
     return res.status(400).json({
-      error: 'O responsável pode ter no máximo 60 caracteres.'
+      error: "O responsável pode ter no máximo 60 caracteres.",
     });
   }
 
   if (trimmedNotes.length > 200) {
     return res.status(400).json({
-      error: 'As observações podem ter no máximo 200 caracteres.'
+      error: "As observações podem ter no máximo 200 caracteres.",
     });
   }
 
@@ -135,17 +116,17 @@ exports.createTicket = (req, res) => {
       numericResolutionTime,
       channel,
       trimmedOwner,
-      trimmedNotes
+      trimmedNotes,
     ],
     function (err) {
       if (err) {
-        return res.status(500).json({ error: 'Erro ao criar ticket.' });
+        return res.status(500).json({ error: "Erro ao criar ticket." });
       }
 
       res.status(201).json({
-        message: 'Ticket criado com sucesso.',
-        id: this.lastID
+        message: "Ticket criado com sucesso.",
+        id: this.lastID,
       });
-    }
+    },
   );
 };
