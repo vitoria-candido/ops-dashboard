@@ -1,41 +1,103 @@
-# 📊 OPS Dashboard
+# 📊 Ops Dashboard
 
-Aplicação full stack para cadastro e acompanhamento de tickets operacionais.
+Ops Dashboard é uma aplicação full stack para registro e acompanhamento de tickets operacionais.
 
-## 🧩 O que o projeto faz
+O projeto permite cadastrar, visualizar e analisar tickets com base em diferentes critérios, como status, categoria e tempo de resolução, simulando um cenário real de operação.
 
-O sistema permite:
+---
 
-- cadastrar tickets com informações como data, categoria, status, tempo de resolução, canal, responsável e observações
-- visualizar os tickets em uma tabela
-- filtrar por status
-- acompanhar indicadores simples (total, pendentes, em andamento e resolvidos)
+## 💡 Objetivo
 
-## 🛠️ Tecnologias
+Este projeto foi desenvolvido com foco em prática e evolução técnica, principalmente para:
 
-### Frontend
+* Trabalhar com arquitetura full stack (frontend + backend)
+* Criar uma API REST com Node.js e Express
+* Integrar frontend em React com backend
+* Manipular e validar dados de forma consistente
+* Simular um fluxo real de operação com indicadores (KPIs)
 
-- React
-- Vite
-- CSS
+Também é um projeto voltado para portfólio, com o objetivo de demonstrar minhas habilidades como desenvolvedora.
 
-### Backend
+---
 
-- Node.js
-- Express
+## 🚀 Funcionalidades
 
-### Banco de dados
+* Cadastro de tickets com:
 
-- SQLite
+  * Data
+  * Categoria
+  * Status
+  * Canal
+  * Tempo de resolução
+  * Responsável
+  * Observações
 
-## ✅ Validações
+* Listagem de tickets em tabela
 
-Os dados são validados tanto no frontend quanto no backend.
+* Indicadores (KPIs):
+
+  * Total de tickets
+  * Tickets resolvidos
+  * Tempo médio de resolução
+  * Taxa de escalonamento
+
+---
+
+## ⚙️ Regras de Negócio
 
 Algumas regras implementadas:
 
-- Entrada flexível para tempo de resolução no frontend, com suporte a formatos como `30min`, `1h` e `1:30`
-- Conversão automática do tempo para um valor numérico em horas antes do envio para a API
+* Entrada flexível para tempo de resolução no frontend, com suporte a formatos como `30min`, `1h` e `1:30`
+* Conversão automática do tempo para um valor numérico em horas antes do envio para a API
+* Validação de campos obrigatórios
+* Validação de tipos e formatos de dados no backend
+* Tempo de resolução deve ser maior que zero
+
+---
+
+## 🧱 Arquitetura
+
+O projeto é dividido em duas partes principais:
+
+### 🔹 Backend (Node.js + Express)
+
+* API REST para gerenciamento de tickets
+* Validação de dados recebidos
+* Persistência em banco SQLite
+
+Principais camadas:
+
+* `controllers`
+* `routes`
+* `database`
+
+---
+
+### 🔹 Frontend (React + Vite)
+
+* Interface para cadastro e visualização de tickets
+* Consumo da API via fetch
+* Exibição de indicadores (KPIs)
+* Conversão de dados antes do envio para o backend
+
+---
+
+## 🛠️ Tecnologias utilizadas
+
+### Backend
+
+* Node.js
+* Express
+* SQLite
+
+### Frontend
+
+* React
+* Vite
+* JavaScript
+* CSS
+
+---
 
 ## ▶️ Como rodar o projeto
 
@@ -89,15 +151,10 @@ http://localhost:5173
 
 ---
 
-## 🗂️ Estrutura do projeto
+## ⚠️ Observações
 
-```
-ops-dashboard/
-├── backend/
-├── frontend/
-├── dashboard.png
-└── README.md
-```
+* Em ambiente de desenvolvimento, o banco pode ser reiniciado ao subir o servidor, removendo os tickets cadastrados
+* O tempo de resolução é armazenado como valor numérico em horas no backend
 
 ---
 
@@ -107,23 +164,6 @@ ops-dashboard/
 
 ---
 
-## ⚠️ Observação
-
-Em ambiente de desenvolvimento, os tickets são apagados ao reiniciar o servidor.  
-Isso foi mantido para facilitar testes durante o desenvolvimento.
-
----
-
 ## 👩‍💻 Autora
 
-Vitória Candido
-
-Estudante de Sistemas de Informação
-
----
-
-## 💡 Sobre o projeto
-
-Este projeto foi desenvolvido como prática de uma aplicação full stack, cobrindo desde a criação de APIs até a interface com o usuário.
-
-A ideia foi focar em algo simples, mas funcional, com validações e organização de código.
+Desenvolvido por Vitória Candido
